@@ -8,6 +8,8 @@ import (
 	"path/filepath"
 )
 
+//Based on: https://stackoverflow.com/questions/37869793/how-do-i-zip-a-directory-containing-sub-directories-or-files-in-golang
+
 // Zips "./input" into "./output.zip"
 func CreateZipFile(inputdir string, outputfilename string) {
 	file, err := os.Create(outputfilename)
